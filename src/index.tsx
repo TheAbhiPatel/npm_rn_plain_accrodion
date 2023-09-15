@@ -1,13 +1,29 @@
-import { FC, useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import {
   Animated,
   LayoutAnimation,
   Text,
   View,
   TouchableOpacity,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+  Image,
 } from "react-native";
 
+interface IListProps {
+  title: string;
+}
+
 interface IProps {
+  headerTitle: string;
+  titleStyle?: StyleProp<TextStyle>;
+  headerBgColor?: string;
+  headerBorderRadius?: number;
+  listContainerStyle?: StyleProp<ViewStyle>;
+  iconColor?: string;
+  icon?: () => React.ReactNode;
+  list: (props: IListProps) => React.ReactNode;
   data: {
     title: string;
   }[];
@@ -27,7 +43,17 @@ const toggleAnimation = {
   },
 };
 
-export const Accordion: FC<IProps> = ({ data: data1 }) => {
+export const Accordion: FC<IProps> = ({
+  headerTitle,
+  titleStyle,
+  data: data1,
+  headerBgColor,
+  headerBorderRadius = 0,
+  listContainerStyle,
+  icon,
+  iconColor,
+  list,
+}) => {
   const [showContent, setShowContent] = useState(true);
   const [data, setData] = useState(data1.slice(0, 4));
   const [clickCount, setClickCount] = useState<"FIRST" | "SECOND" | "THIRD">(
@@ -63,8 +89,8 @@ export const Accordion: FC<IProps> = ({ data: data1 }) => {
     <View style={{ marginTop: 4, overflow: "hidden" }}>
       <View
         style={{
-          borderRadius: 8,
-          backgroundColor: "#3d4058",
+          borderRadius: headerBorderRadius,
+          backgroundColor: headerBgColor,
         }}
       >
         <TouchableOpacity
@@ -76,21 +102,28 @@ export const Accordion: FC<IProps> = ({ data: data1 }) => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ color: "#fff" }}>Open Accordion</Text>
-          <Animated.View style={{ transform: [{ rotateZ: arrowTransition }] }}>
-            <Text style={{ color: "#fff" }}>v</Text>
+          <Text style={titleStyle}>{headerTitle}</Text>
+          <Animated.View
+            style={{
+              transform: [{ rotateZ: arrowTransition }],
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {icon ? (
+              icon()
+            ) : (
+              <Image
+                source={require("../assets/arrowDown.png")}
+                style={{ width: 16, height: 16, tintColor: iconColor }}
+              />
+            )}
           </Animated.View>
         </TouchableOpacity>
       </View>
 
       {showContent && (
-        <View>
-          {data.map((item, index) => (
-            <View key={index} style={{ padding: 10 }}>
-              <Text style={{ color: "#fff" }}>{item.title}</Text>
-            </View>
-          ))}
-        </View>
+        <View style={listContainerStyle}>{data.map((item) => list(item))}</View>
       )}
     </View>
   );
