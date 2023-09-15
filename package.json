@@ -1,0 +1,42 @@
+{
+  "name": "react-native-plain-accordion",
+  "version": "1.0.2",
+  "description": "This is my first react native library for plain accordion",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theabhipatel/react_native_plain_accordion"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-native": "^0.70.8"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "Accordion",
+    "Collapse",
+    "show",
+    "hide",
+    "click to show/hide",
+    "react native",
+    "expand",
+    "expandable-listview",
+    "react-native-expandable-listview",
+    "customizable",
+    "react-native-accordion-list-view",
+    "react-native-accordion-listview",
+    "react-native-accordion",
+    "animated",
+    "RTL accordion"
+  ],
+  "author": "TheAbhiPatel",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
